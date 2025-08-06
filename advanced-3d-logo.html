@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>西安石油大学校徽 - 高级3D展示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header h1 {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+            animation: glow 2s ease-in-out infinite alternate;
+            background: linear-gradient(45deg, #fff, #f0f0f0, #fff);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .logo-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 50px 0;
+            align-items: center;
+        }
+
+        .logo-3d-container {
+            perspective: 1200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 500px;
+        }
+
+        .logo-3d {
+            position: relative;
+            transform-style: preserve-3d;
+            animation: float3D 8s ease-in-out infinite;
+            cursor: pointer;
+            transition: all 0.5s ease;
+        }
+
+        .logo-3d:hover {
+            transform: scale(1.15) rotateY(20deg) rotateX(10deg);
+        }
+
+        .logo-svg {
+            width: 450px;
+            height: 450px;
+            filter: drop-shadow(0 25px 50px rgba(0,0,0,0.4));
+            transition: all 0.5s ease;
+        }
+
+        .logo-svg:hover {
+            filter: drop-shadow(0 35px 70px rgba(0,0,0,0.5));
+        }
+
+        .controls-panel {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 40px;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .controls-panel h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .control-group {
+            margin-bottom: 25px;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .control-btn {
+            background: linear-gradient(45deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 12px 24px;
+            margin: 5px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+        }
+
+        .control-btn:hover {
+            background: linear-gradient(45deg, rgba(255,255,255,0.3), rgba(255,255,255,0.2));
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .control-btn.active {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            border-color: #4CAF50;
+        }
+
+        .slider-container {
+            margin: 15px 0;
+        }
+
+        .slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255,255,255,0.2);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        .info-section {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px 0;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .info-section h3 {
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .info-section p {
+            line-height: 1.8;
+            opacity: 0.9;
+            text-align: justify;
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 70%);
+            border-radius: 50%;
+            animation: particleFloat 25s infinite linear;
+        }
+
+        @keyframes float3D {
+            0%, 100% { 
+                transform: translateY(0px) rotateY(0deg) rotateX(0deg); 
+            }
+            25% { 
+                transform: translateY(-15px) rotateY(90deg) rotateX(5deg); 
+            }
+            50% { 
+                transform: translateY(-25px) rotateY(180deg) rotateX(0deg); 
+            }
+            75% { 
+                transform: translateY(-15px) rotateY(270deg) rotateX(-5deg); 
+            }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) rotate(36deg) scale(1);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(10vh) rotate(324deg) scale(1);
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .feature-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 30px;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .feature-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #FFD700;
+        }
+
+        @media (max-width: 1024px) {
+            .logo-showcase {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 3rem;
+            }
+            
+            .logo-svg {
+                width: 350px;
+                height: 350px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .logo-svg {
+                width: 300px;
+                height: 300px;
+            }
+            
+            .control-btn {
+                margin: 3px;
+                padding: 10px 18px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>西安石油大学校徽</h1>
+            <p>高级3D交互式展示 - 探索校徽的每一个细节</p>
+        </div>
+
+        <div class="logo-showcase">
+            <div class="logo-3d-container">
+                <div class="logo-3d" id="logo3d">
+                    <svg class="logo-svg" width="450" height="450" viewBox="0 0 890 890" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- 外圆环 -->
+                        <path d="M757.321 132.438C929.941 305.058 929.941 584.938 757.321 757.558C584.701 930.178 304.838 930.178 132.221 757.558C-40.3967 584.938 -40.3967 305.058 132.221 132.438C304.838 -40.1826 584.701 -40.1826 757.321 132.438Z" stroke="#9A1E23" stroke-width="4.93128" stroke-miterlimit="22.93"/>
+                        
+                        <!-- 中央复杂图案 -->
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M523.542 117.075L528.961 117.876C529.379 116.761 529.797 115.646 530.233 114.548C528.276 114.395 526.307 114.5 524.378 114.862L523.542 117.075ZM536.628 114.426L534.154 119.235C536.523 119.689 538.876 120.177 541.245 120.648C541.733 119.357 542.221 118.068 542.727 116.761L536.628 114.426ZM536.001 102.769C533.643 102.02 531.167 101.719 528.7 101.88C528.299 104.645 527.489 107.335 526.295 109.861L526.853 110.07L527.062 109.53L530.059 110.018C530.059 109.843 530.181 109.652 530.25 109.478H532.132L536.001 102.699V102.769Z" fill="#9A1E23"/>
+                        
+                        <!-- 更多复杂路径... -->
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M409.171 319.261C415.984 319.261 421.507 324.785 421.507 331.598C421.507 338.411 415.984 343.935 409.171 343.935C402.358 343.935 396.834 338.411 396.834 331.598C396.844 324.789 402.361 319.272 409.171 319.261ZM444.613 160.168C286.535 160.168 157.609 289.116 157.609 447.181C157.609 605.245 286.553 734.192 444.613 734.192C602.673 734.192 731.616 605.245 731.616 447.181C731.616 289.116 602.638 160.168 444.613 160.168Z" fill="#9A1E23"/>
+                        
+                        <!-- 文字部分 -->
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M408.837 645.656V688.539H398.138V665.537C398.214 663.542 398.133 661.544 397.894 659.561C397.721 658.874 397.239 658.306 396.587 658.027C395.033 657.574 393.41 657.404 391.795 657.522H390.75V652.521C395.378 651.72 399.563 649.284 402.546 645.656H408.837Z" fill="white"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="controls-panel">
+                <h3>交互控制</h3>
+                
+                <div class="control-group">
+                    <label>旋转控制</label>
+                    <button class="control-btn" onclick="toggleRotation()" id="rotationBtn">开始旋转</button>
+                    <button class="control-btn" onclick="resetView()">重置视角</button>
+                    <button class="control-btn" onclick="toggleParticles()" id="particleBtn">粒子效果</button>
+                </div>
+
+                <div class="control-group">
+                    <label>轴旋转</label>
+                    <button class="control-btn" onclick="rotateX()">X轴旋转</button>
+                    <button class="control-btn" onclick="rotateY()">Y轴旋转</button>
+                    <button class="control-btn" onclick="rotateZ()">Z轴旋转</button>
+                </div>
+
+                <div class="control-group">
+                    <label>旋转速度</label>
+                    <div class="slider-container">
+                        <input type="range" min="1" max="10" value="5" class="slider" id="speedSlider" oninput="updateSpeed()">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>缩放控制</label>
+                    <div class="slider-container">
+                        <input type="range" min="50" max="200" value="100" class="slider" id="scaleSlider" oninput="updateScale()">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h4>🎨 3D 视觉效果</h4>
+                <p>采用先进的 CSS 3D 变换技术，为校徽提供沉浸式的三维展示体验。支持多轴旋转、缩放和动态阴影效果。</p>
+            </div>
+            <div class="feature-card">
+                <h4>🖱️ 交互控制</h4>
+                <p>提供丰富的交互控制选项，包括自动旋转、手动轴旋转、速度调节和缩放控制，让用户完全掌控展示效果。</p>
+            </div>
+            <div class="feature-card">
+                <h4>✨ 粒子动画</h4>
+                <p>动态粒子背景效果，营造科技感和现代感。粒子会从底部向上飘动，增加页面的视觉层次和动感。</p>
+            </div>
+            <div class="feature-card">
+                <h4>📱 响应式设计</h4>
+                <p>完全响应式设计，在不同设备上都能提供最佳的展示效果。支持桌面端、平板和移动设备。</p>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h3>校徽设计理念与象征意义</h3>
+            <p>西安石油大学校徽以深红色（#9A1E23）为主色调，体现了石油工业的厚重历史和学校在能源领域的专业特色。圆形设计象征着团结、和谐和包容，体现了学校师生同心同德、追求卓越的精神风貌。</p>
+            <p>中央的复杂图案象征着油井架和钻机，展现了学校在石油工程、地质勘探等领域的专业优势。白色文字部分清晰可辨，体现了学校严谨治学、追求真理的学术精神。整个设计既保持了传统校徽的庄重感，又体现了现代设计的美学理念。</p>
+        </div>
+    </div>
+
+    <script>
+        let isRotating = false;
+        let rotationInterval;
+        let particlesEnabled = true;
+        let rotationSpeed = 5;
+        let currentScale = 100;
+
+        // 创建粒子效果
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 80; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.width = Math.random() * 6 + 3 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDelay = Math.random() * 25 + 's';
+                particle.style.animationDuration = (Math.random() * 15 + 15) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // 切换旋转
+        function toggleRotation() {
+            const logo = document.getElementById('logo3d');
+            const btn = document.getElementById('rotationBtn');
+            
+            if (isRotating) {
+                clearInterval(rotationInterval);
+                isRotating = false;
+                btn.textContent = '开始旋转';
+                btn.classList.remove('active');
+            } else {
+                rotationInterval = setInterval(() => {
+                    const currentTransform = logo.style.transform || '';
+                    const rotation = currentTransform.match(/rotateY\(([^)]+)\)/) || [0, '0deg'];
+                    const currentAngle = parseInt(rotation[1]) || 0;
+                    logo.style.transform = `rotateY(${currentAngle + rotationSpeed/10}deg) scale(${currentScale/100})`;
+                }, 50);
+                isRotating = true;
+                btn.textContent = '停止旋转';
+                btn.classList.add('active');
+            }
+        }
+
+        // 重置视角
+        function resetView() {
+            const logo = document.getElementById('logo3d');
+            logo.style.transform = 'rotateY(0deg) rotateX(0deg) rotateZ(0deg) scale(1)';
+            currentScale = 100;
+            document.getElementById('scaleSlider').value = 100;
+            if (isRotating) {
+                clearInterval(rotationInterval);
+                isRotating = false;
+                document.getElementById('rotationBtn').textContent = '开始旋转';
+                document.getElementById('rotationBtn').classList.remove('active');
+            }
+        }
+
+        // 切换粒子效果
+        function toggleParticles() {
+            const particles = document.querySelectorAll('.particle');
+            const btn = document.getElementById('particleBtn');
+            particlesEnabled = !particlesEnabled;
+            
+            particles.forEach(particle => {
+                particle.style.display = particlesEnabled ? 'block' : 'none';
+            });
+            
+            if (particlesEnabled) {
+                btn.textContent = '关闭粒子';
+                btn.classList.add('active');
+            } else {
+                btn.textContent = '粒子效果';
+                btn.classList.remove('active');
+            }
+        }
+
+        // 更新旋转速度
+        function updateSpeed() {
+            rotationSpeed = document.getElementById('speedSlider').value;
+        }
+
+        // 更新缩放
+        function updateScale() {
+            currentScale = document.getElementById('scaleSlider').value;
+            const logo = document.getElementById('logo3d');
+            const currentTransform = logo.style.transform || '';
+            const transformWithoutScale = currentTransform.replace(/scale\([^)]*\)/, '');
+            logo.style.transform = transformWithoutScale + ` scale(${currentScale/100})`;
+        }
+
+        // 轴旋转函数
+        function rotateX() {
+            const logo = document.getElementById('logo3d');
+            const currentTransform = logo.style.transform || '';
+            const rotation = currentTransform.match(/rotateX\(([^)]+)\)/) || [0, '0deg'];
+            const currentAngle = parseInt(rotation[1]) || 0;
+            const newTransform = currentTransform.replace(/rotateX\([^)]*\)/, '') + ` rotateX(${currentAngle + 90}deg)`;
+            logo.style.transform = newTransform;
+        }
+
+        function rotateY() {
+            const logo = document.getElementById('logo3d');
+            const currentTransform = logo.style.transform || '';
+            const rotation = currentTransform.match(/rotateY\(([^)]+)\)/) || [0, '0deg'];
+            const currentAngle = parseInt(rotation[1]) || 0;
+            const newTransform = currentTransform.replace(/rotateY\([^)]*\)/, '') + ` rotateY(${currentAngle + 90}deg)`;
+            logo.style.transform = newTransform;
+        }
+
+        function rotateZ() {
+            const logo = document.getElementById('logo3d');
+            const currentTransform = logo.style.transform || '';
+            const rotation = currentTransform.match(/rotateZ\(([^)]+)\)/) || [0, '0deg'];
+            const currentAngle = parseInt(rotation[1]) || 0;
+            const newTransform = currentTransform.replace(/rotateZ\([^)]*\)/, '') + ` rotateZ(${currentAngle + 90}deg)`;
+            logo.style.transform = newTransform;
+        }
+
+        // 鼠标交互
+        document.getElementById('logo3d').addEventListener('mousemove', function(e) {
+            if (!isRotating) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 15;
+                const rotateY = (x - centerX) / 15;
+                
+                this.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${currentScale/100})`;
+            }
+        });
+
+        // 初始化
+        window.addEventListener('load', function() {
+            createParticles();
+            document.getElementById('particleBtn').textContent = '关闭粒子';
+            document.getElementById('particleBtn').classList.add('active');
+        });
+    </script>
+</body>
+</html> 

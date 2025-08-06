@@ -1,0 +1,306 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    color: white;
+    margin-bottom: 50px;
+    position: relative;
+    z-index: 10;
+}
+
+.header h1 {
+    font-size: 4rem;
+    margin-bottom: 15px;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+    background: linear-gradient(45deg, #fff, #f0f0f0, #fff);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 3s ease infinite;
+}
+
+.header p {
+    font-size: 1.3rem;
+    opacity: 0.9;
+    animation: fadeInUp 1s ease-out 0.5s both;
+}
+
+.logo-showcase {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin: 50px 0;
+    align-items: center;
+}
+
+.logo-3d-container {
+    perspective: 1200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 500px;
+}
+
+.logo-3d {
+    position: relative;
+    transform-style: preserve-3d;
+    animation: float3D 8s ease-in-out infinite;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.logo-3d:hover {
+    transform: scale(1.15) rotateY(20deg) rotateX(10deg);
+}
+
+.logo-svg {
+    width: 450px;
+    height: 450px;
+    filter: drop-shadow(0 25px 50px rgba(0,0,0,0.4));
+    transition: all 0.5s ease;
+}
+
+.logo-svg:hover {
+    filter: drop-shadow(0 35px 70px rgba(0,0,0,0.5));
+}
+
+.controls-panel {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 25px;
+    padding: 40px;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.controls-panel h3 {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.control-group {
+    margin-bottom: 25px;
+}
+
+.control-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.control-btn {
+    background: linear-gradient(45deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+    border: 2px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 12px 24px;
+    margin: 5px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    backdrop-filter: blur(10px);
+}
+
+.control-btn:hover {
+    background: linear-gradient(45deg, rgba(255,255,255,0.3), rgba(255,255,255,0.2));
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.control-btn.active {
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+    border-color: #4CAF50;
+}
+
+.slider-container {
+    margin: 15px 0;
+}
+
+.slider {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.2);
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.info-section {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 30px;
+    margin: 40px 0;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.info-section h3 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.info-section p {
+    line-height: 1.8;
+    opacity: 0.9;
+    text-align: justify;
+}
+
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.particle {
+    position: absolute;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 70%);
+    border-radius: 50%;
+    animation: particleFloat 25s infinite linear;
+}
+
+@keyframes float3D {
+    0%, 100% { 
+        transform: translateY(0px) rotateY(0deg) rotateX(0deg); 
+    }
+    25% { 
+        transform: translateY(-15px) rotateY(90deg) rotateX(5deg); 
+    }
+    50% { 
+        transform: translateY(-25px) rotateY(180deg) rotateX(0deg); 
+    }
+    75% { 
+        transform: translateY(-15px) rotateY(270deg) rotateX(-5deg); 
+    }
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes particleFloat {
+    0% {
+        transform: translateY(100vh) rotate(0deg) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(90vh) rotate(36deg) scale(1);
+    }
+    90% {
+        opacity: 1;
+        transform: translateY(10vh) rotate(324deg) scale(1);
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg) scale(0);
+        opacity: 0;
+    }
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin: 50px 0;
+}
+
+.feature-card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 30px;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.feature-card h4 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: #FFD700;
+}
+
+@media (max-width: 1024px) {
+    .logo-showcase {
+        grid-template-columns: 1fr;
+    }
+    
+    .header h1 {
+        font-size: 3rem;
+    }
+    
+    .logo-svg {
+        width: 350px;
+        height: 350px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 2.5rem;
+    }
+    
+    .logo-svg {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .control-btn {
+        margin: 3px;
+        padding: 10px 18px;
+        font-size: 12px;
+    }
+} 

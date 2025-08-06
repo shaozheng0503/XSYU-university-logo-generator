@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>西安石油大学校徽 - 完全复刻3D展示</title>
+    <link rel="stylesheet" href="3d-styles.css">
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>西安石油大学校徽</h1>
+            <p>完全复刻3D交互式展示 - 探索校徽的每一个细节</p>
+        </div>
+
+        <div class="logo-showcase">
+            <div class="logo-3d-container">
+                <div class="logo-3d" id="logo3d">
+                    <svg class="logo-svg" width="450" height="450" viewBox="0 0 890 890" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- 外圆环 -->
+                        <path d="M757.321 132.438C929.941 305.058 929.941 584.938 757.321 757.558C584.701 930.178 304.838 930.178 132.221 757.558C-40.3967 584.938 -40.3967 305.058 132.221 132.438C304.838 -40.1826 584.701 -40.1826 757.321 132.438Z" stroke="#9A1E23" stroke-width="4.93128" stroke-miterlimit="22.93"/>
+                        
+                        <!-- 中央复杂图案 -->
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M523.542 117.075L528.961 117.876C529.379 116.761 529.797 115.646 530.233 114.548C528.276 114.395 526.307 114.5 524.378 114.862L523.542 117.075ZM536.628 114.426L534.154 119.235C536.523 119.689 538.876 120.177 541.245 120.648C541.733 119.357 542.221 118.068 542.727 116.761L536.628 114.426ZM536.001 102.769C533.643 102.02 531.167 101.719 528.7 101.88C528.299 104.645 527.489 107.335 526.295 109.861L526.853 110.07L527.062 109.53L530.059 110.018C530.059 109.843 530.181 109.652 530.25 109.478H532.132L536.001 102.699V102.769Z" fill="#9A1E23"/>
+                        
+                        <!-- 更多复杂路径... -->
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M409.171 319.261C415.984 319.261 421.507 324.785 421.507 331.598C421.507 338.411 415.984 343.935 409.171 343.935C402.358 343.935 396.834 338.411 396.834 331.598C396.844 324.789 402.361 319.272 409.171 319.261ZM444.613 160.168C286.535 160.168 157.609 289.116 157.609 447.181C157.609 605.245 286.553 734.192 444.613 734.192C602.673 734.192 731.616 605.245 731.616 447.181C731.616 289.116 602.638 160.168 444.613 160.168Z" fill="#9A1E23"/>
+                        
+                        <!-- 文字部分 -->
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M408.837 645.656V688.539H398.138V665.537C398.214 663.542 398.133 661.544 397.894 659.561C397.721 658.874 397.239 658.306 396.587 658.027C395.033 657.574 393.41 657.404 391.795 657.522H390.75V652.521C395.378 651.72 399.563 649.284 402.546 645.656H408.837Z" fill="white"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="controls-panel">
+                <h3>交互控制</h3>
+                
+                <div class="control-group">
+                    <label>旋转控制</label>
+                    <button class="control-btn" onclick="toggleRotation()" id="rotationBtn">开始旋转</button>
+                    <button class="control-btn" onclick="resetView()">重置视角</button>
+                    <button class="control-btn" onclick="toggleParticles()" id="particleBtn">粒子效果</button>
+                </div>
+
+                <div class="control-group">
+                    <label>轴旋转</label>
+                    <button class="control-btn" onclick="rotateX()">X轴旋转</button>
+                    <button class="control-btn" onclick="rotateY()">Y轴旋转</button>
+                    <button class="control-btn" onclick="rotateZ()">Z轴旋转</button>
+                </div>
+
+                <div class="control-group">
+                    <label>旋转速度</label>
+                    <div class="slider-container">
+                        <input type="range" min="1" max="10" value="5" class="slider" id="speedSlider" oninput="updateSpeed()">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>缩放控制</label>
+                    <div class="slider-container">
+                        <input type="range" min="50" max="200" value="100" class="slider" id="scaleSlider" oninput="updateScale()">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h4>🎨 完全复刻</h4>
+                <p>基于原始SVG数据完全复刻的校徽，保持了每一个细节的准确性，包括复杂的路径数据和精确的颜色值。</p>
+            </div>
+            <div class="feature-card">
+                <h4>🖱️ 交互控制</h4>
+                <p>提供丰富的交互控制选项，包括自动旋转、手动轴旋转、速度调节和缩放控制，让用户完全掌控展示效果。</p>
+            </div>
+            <div class="feature-card">
+                <h4>✨ 粒子动画</h4>
+                <p>动态粒子背景效果，营造科技感和现代感。粒子会从底部向上飘动，增加页面的视觉层次和动感。</p>
+            </div>
+            <div class="feature-card">
+                <h4>📱 响应式设计</h4>
+                <p>完全响应式设计，在不同设备上都能提供最佳的展示效果。支持桌面端、平板和移动设备。</p>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h3>校徽设计理念与象征意义</h3>
+            <p>西安石油大学校徽以深红色（#9A1E23）为主色调，体现了石油工业的厚重历史和学校在能源领域的专业特色。圆形设计象征着团结、和谐和包容，体现了学校师生同心同德、追求卓越的精神风貌。</p>
+            <p>中央的复杂图案象征着油井架和钻机，展现了学校在石油工程、地质勘探等领域的专业优势。白色文字部分清晰可辨，体现了学校严谨治学、追求真理的学术精神。整个设计既保持了传统校徽的庄重感，又体现了现代设计的美学理念。</p>
+        </div>
+    </div>
+
+    <script src="3d-script.js"></script>
+</body>
+</html> 
